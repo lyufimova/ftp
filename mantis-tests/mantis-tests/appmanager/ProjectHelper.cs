@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,45 @@ namespace mantis_tests
             CreateNewProject();
             FillProjectForm(project);
             SubmitProjectForm();
+            return this;
+        }
+
+        public ProjectHelper Remove(ProjectData project)
+        {
+            manager.Navigator.GoToManageProjects();
+            SelectProject(project);
+            RemovalProject();
+            ConfirmRemoval();
+            return this;
+        }
+
+        public ProjectHelper ConfirmRemoval()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+               .Until(d => d.FindElements(By.CssSelector("div.alert-warning")).Count > 0);
+            driver.FindElement(By.CssSelector("input[value='Delete Project']")).Click();
+            return this;
+        }
+
+        public ProjectHelper RemovalProject()
+        {
+            driver.FindElement(By.CssSelector("input[value='Delete Project']")).Click();
+            return this;
+        }
+
+        public ProjectHelper SelectProject(ProjectData project)
+        {
+
+            IReadOnlyCollection<IWebElement> result = driver.FindElement(By.XPath("//button[.='Create New Project']/../../../..")).FindElements(By.CssSelector("td a"));
+            foreach (IWebElement element in result)
+            {
+                if (element.GetAttribute("href").EndsWith("?project_id="+project.Id))
+                {
+                    element.Click();
+                    return this;
+                }
+            }
+               
             return this;
         }
 

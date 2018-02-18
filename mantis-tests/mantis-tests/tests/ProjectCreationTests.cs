@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-using System.IO;
 
 namespace mantis_tests
 {
@@ -14,7 +9,7 @@ namespace mantis_tests
         public void ProjectCreationTest()
 
         {
-            ProjectData project = new ProjectData("Test 111");
+            ProjectData project = new ProjectData("Test A");
 
             List<ProjectData> oldProjects = ProjectData.GetAll();
 

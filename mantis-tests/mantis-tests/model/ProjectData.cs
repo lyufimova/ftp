@@ -23,6 +23,9 @@ namespace mantis_tests
         public string Name { get; set; }
 
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+
         public static List<ProjectData> GetAll()
         {
             using (MantisDB db = new MantisDB())
